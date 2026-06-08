@@ -25,6 +25,59 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
 
+  // THEME TOGGLE: elements
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-icon");
+
+  // Read stored theme ('light' | 'dark') or fallback to system preference
+  function getStoredTheme() {
+    try {
+      return localStorage.getItem("siteTheme");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setStoredTheme(value) {
+    try {
+      localStorage.setItem("siteTheme", value);
+    } catch (e) {
+      // ignore storage errors
+    }
+  }
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+      if (themeIcon) themeIcon.textContent = "☀️";
+    } else {
+      document.body.classList.remove("dark-mode");
+      if (themeIcon) themeIcon.textContent = "🌙";
+    }
+  }
+
+  // Initialize theme on load
+  (function initTheme() {
+    const stored = getStoredTheme();
+    if (stored) {
+      applyTheme(stored);
+    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      applyTheme("dark");
+    } else {
+      applyTheme("light");
+    }
+  })();
+
+  // Toggle handler
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isDark = document.body.classList.contains("dark-mode");
+      const nextTheme = isDark ? "light" : "dark";
+      applyTheme(nextTheme);
+      setStoredTheme(nextTheme);
+    });
+  }
+
   // Activity categories with corresponding colors
   const activityTypes = {
     sports: { label: "Sports", color: "#e8f5e9", textColor: "#2e7d32" },
