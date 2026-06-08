@@ -32,6 +32,49 @@
   --info-light: #d1ecf1;
 }
 
+/* Dark mode variables: toggled by adding .dark-mode to <body> */
+body.dark-mode {
+  --background: #0f1113;
+  --surface: #121318;
+  --text-primary: #e6eef6;
+  --text-secondary: #b9c6d6;
+  --border: #22262a;
+  --border-light: #1b1f22;
+  --border-focus: #2a6cff;
+  --primary: #0b5bd7;
+  --primary-light: #2e7bff;
+  --primary-dark: #05307b;
+  --primary-text: #ffffff;
+
+  --secondary: #ffb74d;
+  --secondary-light: #ffd180;
+  --secondary-dark: #c88719;
+  --secondary-text: #000000;
+
+  --success: #60d394;
+  --warning: #ffd06b;
+  --error: #ff8a80;
+  --info: #66d0ff;
+}
+
+/* Theme toggle small style (keeps same look as other icon-buttons) */
+#theme-toggle {
+  margin-left: 8px;
+  background-color: rgba(255,255,255,0.08);
+}
+#theme-toggle:hover {
+  background-color: rgba(255,255,255,0.12);
+}
+
+/* Utility for screen-reader only text */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
