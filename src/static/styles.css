@@ -267,6 +267,29 @@ section h3 {
   align-items: center;
 }
 
+/* Share buttons */
+.share-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.share-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #fff;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.share-btn:hover { transform: translateY(-2px); }
+
+.share-btn.twitter { background: #1da1f2; }
+.share-btn.facebook { background: #1877f2; }
+.share-btn.email { background: #6c757d; }
+
 /* Buttons */
 .register-button {
   background: linear-gradient(145deg, var(--secondary), var(--secondary-dark));
