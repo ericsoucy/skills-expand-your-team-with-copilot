@@ -519,6 +519,14 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    const shareHtml = `
+      <div class="share-buttons" aria-label="Share activity">
+        <button class="share-btn twitter" data-activity="${name}" aria-label="Share on Twitter">Tweet</button>
+        <button class="share-btn facebook" data-activity="${name}" aria-label="Share on Facebook">Share</button>
+        <button class="share-btn email" data-activity="${name}" aria-label="Share via Email">Email</button>
+      </div>
+    `;
+
     activityCard.innerHTML = `
       ${tagHtml}
       <h4>${name}</h4>
@@ -552,6 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .join("")}
         </ul>
       </div>
+      ${shareHtml}
       <div class="activity-card-actions">
         ${
           currentUser
@@ -587,7 +596,39 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // Add share button handlers
+    const shareButtons = activityCard.querySelectorAll(".share-btn");
+    shareButtons.forEach((btn) => {
+      btn.addEventListener("click", handleShare);
+    });
+
     activitiesList.appendChild(activityCard);
+  }
+
+  // Handle share actions
+  function handleShare(event) {
+    const btn = event.currentTarget;
+    const activityName = btn.dataset.activity;
+    const details = allActivities[activityName] || {};
+    const shareText = `${activityName} - ${details.description || ''}`;
+    const url = window.location.href;
+
+    if (btn.classList.contains("twitter")) {
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        shareText
+      )}&url=${encodeURIComponent(url)}`;
+      window.open(shareUrl, "_blank", "noopener");
+    } else if (btn.classList.contains("facebook")) {
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        url
+      )}&quote=${encodeURIComponent(shareText)}`;
+      window.open(shareUrl, "_blank", "noopener");
+    } else if (btn.classList.contains("email")) {
+      const mailto = `mailto:?subject=${encodeURIComponent("Join " + activityName)}&body=${encodeURIComponent(
+        shareText + "\n\n" + url
+      )}`;
+      window.location.href = mailto;
+    }
   }
 
   // Event listeners for search and filter
